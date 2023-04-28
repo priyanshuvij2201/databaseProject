@@ -137,6 +137,42 @@ router.post('/deleteProduct', function (req, res, next) {
     
   });
 });
+router.post('/deleteCustomer', function (req, res, next) {//deleteCustomer
+  const customer_id=req.body.customer_id;
+  var query = `delete from customer where customerid=${customer_id}`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    const data = {
+          title: 'Delete Customer',
+          body: '<p>Successfully deleted Customer</p>'
+        };
+        res.render('index', data);
+    
+  });
+});
+router.post('/addSupplier', function (req, res, next) {
+  console.log("hello");
+  const supplierid=req.body.s_id;
+const suppliername=req.body.supplier_f_name;;
+const supplieraddress=req.body.address;
+const supplierphone=req.body.c_phone;
+
+console.log(supplierid);
+  var query = `insert into supplier values(${supplierid},'${supplieraddress}','${suppliername}')`;
+  var query1= `insert into supplier_phone values(${supplierid},'${supplierphone}');`;
+
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    // res.json(rows);
+    
+  });
+  connection.query(query1, function (err, rows, fields) {
+    if (err) throw err;
+    // res.json(rows);
+    res.render("index");
+  });
+});
+//addSupplier
 ///deleteProduct
 // http://localhost:3000/setProductData
 // insert into customer_phone values(${customerId},${custPhone})
