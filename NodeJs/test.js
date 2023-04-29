@@ -267,6 +267,26 @@ router.get('/getLoyal', function (req, res, next) {//display customer data
     //res.render("products", { title: "Products", products: rows });
   });
 });
+router.post('/addOrder', function (req, res, next) {//inserting supplier and supplier_phone
+  
+  const orderid=req.body.order_id;
+const orderEmployeeId=req.body.employee_id;
+const orderProduct=req.body.product_id;
+const orderQty=req.body.quantity;
+const orderCustId=req.body.customer_id;
+const orderDate=req.body.order_Date;
+  var query = `CALL insert_order_inf_(${orderid},${orderProduct},${orderQty},${orderCustId},${orderEmployeeId},'${orderDate}')`;
+  
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    const data = {
+      title: 'Add Order',
+      body: '<p>Successfully added order</p>'
+    };
+    
+    res.render("index",data);
+  });
+});
 
 
 

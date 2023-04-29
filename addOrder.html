@@ -535,7 +535,7 @@
     </span>
 
 <span class="main-form">
-      <form>
+      <form method="post" action="http://localhost:3000/addOrder">
 
         <div class="mb-3">
           <label for="order_id" class="form-label">Order ID</label>
@@ -602,6 +602,16 @@
               id="quantity"
               aria-describedby="emailHelp"
               name="quantity"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="expiry" class="form-label">Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="expiry"
+              aria-describedby="emailHelp"
+              name="order_Date"
             />
           </div>
 
