@@ -20,28 +20,27 @@ function clickEventHandler(){
    fetch(getTranslateUrl(serverUrl))
    .then(Response => Response.json())
    .then(json => {
-      var temp = "";
-      
-      json.forEach(element => {
-         
-                  
-         console.log(element.customerid+" "+element.firstname+" "+element.lastname);
-         temp += "<tr>";
-              temp += "<td>" + element.customerid + "</td>";
-              temp += "<td>" + element.firstname + "</td>";
-              temp += "<td>" + element.lastname + "</td>"
-              temp += "<td>" + element.address + "</td></tr>";
-      });
-      tableDisp.innerHTML=temp;
-      
-   })
-   .catch(errorhandler)
+    var temp = "";
+    
+    json.forEach(element => {
+       
+                
+       
+            temp += "<tr>";
+            temp += "<td>" + element.supplierid + "</td>";
+            temp += "<td>" + element.address + "</td>";
+            temp += "<td>" + element.name + "</td>";
+            temp += "<td>" + element.phone + "</td></tr>";
+    });
+    tableDisp.innerHTML=temp;
+ })
+ .catch(errorhandler)
 }
 
 getData.addEventListener("click",(e)=>{
    e.preventDefault();
    console.log("ya");
-   serverUrl="http://localhost:3000/data";
+   serverUrl="http://localhost:3000/getSupplier";
    clickEventHandler()});
 
 

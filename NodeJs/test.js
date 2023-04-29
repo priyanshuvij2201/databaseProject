@@ -18,15 +18,15 @@ connection.connect(function (err) {
 });
 var a=3;
 /* GET home page. */
-router.get('/data', function (req, res, next) {
-  var query = `select * from customer`;
+router.get('/data', function (req, res, next) {//display customer data
+  var query = `select * from customer natural join customer_phone natural join customer_email;`;
   connection.query(query, function (err, rows, fields) {
     if (err) throw err;
     res.json(rows);
     //res.render("products", { title: "Products", products: rows });
   });
 });
-router.get('/getProductData', function (req, res, next) {
+router.get('/getProductData', function (req, res, next) {//display product data
   var query = `select * from product`;
   
   connection.query(query, function (err, rows, fields) {
@@ -35,7 +35,7 @@ router.get('/getProductData', function (req, res, next) {
     //res.render("products", { title: "Products", products: rows });
   });
 });
-router.post('/setdata', function (req, res, next) {
+router.post('/setdata', function (req, res, next) {//test insertion
   var query = `insert into customer values(${a},'Tavish','Gupta','Suryanagar')`;
    console.log(a);
    a++;
@@ -46,7 +46,7 @@ router.post('/setdata', function (req, res, next) {
   });
 });
 
-router.post('/addCustomer', function (req, res, next) {
+router.post('/addCustomer', function (req, res, next) {//inserting customer,customer_phone & customer_email
   console.log("hello");
   const customerId=req.body.c_id;
 const customerFName=req.body.customer_f_name;
@@ -75,7 +75,7 @@ console.log(customerId);
   });
 });
 
-router.post('/setProductData', function (req, res, next) {
+router.post('/setProductData', function (req, res, next) {//inserting product and checking if suppplier exists
   const productCategory=req.body.product_select
   console.log(productCategory);  
   const productId=req.body.product_id;
@@ -124,7 +124,7 @@ WHERE (SELECT COUNT(*) FROM supplier where supplierid='${productSuppId}') > 0;`;
 });
 });
 
-router.post('/deleteProduct', function (req, res, next) {
+router.post('/deleteProduct', function (req, res, next) {//deleting product
   const product_id=req.body.product_id;
   var query = `delete from product where productid=${product_id}`;
   connection.query(query, function (err, rows, fields) {
@@ -150,13 +150,12 @@ router.post('/deleteCustomer', function (req, res, next) {//deleteCustomer
     
   });
 });
-router.post('/addSupplier', function (req, res, next) {
+router.post('/addSupplier', function (req, res, next) {//inserting supplier and supplier_phone
   console.log("hello");
   const supplierid=req.body.s_id;
 const suppliername=req.body.supplier_f_name;;
 const supplieraddress=req.body.address;
 const supplierphone=req.body.c_phone;
-
 console.log(supplierid);
   var query = `insert into supplier values(${supplierid},'${supplieraddress}','${suppliername}')`;
   var query1= `insert into supplier_phone values(${supplierid},'${supplierphone}');`;
@@ -168,10 +167,120 @@ console.log(supplierid);
   });
   connection.query(query1, function (err, rows, fields) {
     if (err) throw err;
-    // res.json(rows);
-    res.render("index");
+    const data = {
+      title: 'Add Supplier',
+      body: '<p>Successfully added Supplier</p>'
+    };
+    
+    res.render("index",data);
   });
 });
+router.get('/getSupplier', function (req, res, next) {//display supplier 
+  var query = `select * from supplier natural join supplier_phone;`;
+  
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
+router.post('/addEmployee', function (req, res, next) {//inserting employee and employee_age
+  console.log("hello");
+  const employeeid=req.body.Employee_id;
+const employeename=req.body.Employee_name;
+const employeedob=req.body.dob;
+const employeephone=req.body.c_phone;
+
+  var query = `insert into employee values(${employeeid},'${employeename}','${employeedob}')`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    const data = {
+      title: 'Add Employee',
+      body: '<p>Successfully added Employee</p>'
+    };
+    res.render("index",data);
+  });
+});
+router.get('/getEmployee', function (req, res, next) {//display employees
+  var query = `SELECT 
+  employeeid, 
+  name, 
+  dob, 
+  TIMESTAMPDIFF(YEAR, dob, CURDATE()) AS age
+FROM 
+  employee;`;
+  
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
+router.post('/setLoyal', function (req, res, next) {//inserting loyal customer and checking if customer exits
+  const loyaltyCategory=req.body.l_type
+  const custId=req.body.c_id;
+const loyaltyId=req.body.l_id;
+const loyaltyExpiryDate=req.body.l_expiry;
+console.log(req.body.expiry);
+var value =1;
+  var query = `insert into loyalty (customerid,loyaltyid,type,expiry) SELECT ${custId},${loyaltyId},'${loyaltyCategory}','${loyaltyExpiryDate}' FROM dual
+WHERE (SELECT COUNT(*) FROM customer where customerid='${custId}') > 0;`;
+  
+  // connection.query(query1, function (err, rows, fields) {
+  //   if (err) throw err;
+  //   // res.json(rows);
+  //   value = rows[0]['count(*)'];
+  //    console.log(value); // Output: 0 (or the actual value of rows[0]['count(*)'])
+  //  if(value==0){
+  //   const data = {
+  //     title: 'Add Product',
+  //     body: '<p>Invalid Supplier Id!</p>'
+  //   };
+  //   res.render('index', data);}
+  // });  
+  // console.log(value);
+  
+  // if(value!=0){
+    
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    var data = {
+      title: 'Add Loyalty',
+      body: '<p>Loyalty added successfully</p>'
+    };
+    value=rows.affectedRows;
+    if(value==0){
+    data = {
+      title: 'Add Loyal Customer',
+      body: '<p>Invalid customer_id ,no rows effected</p>'
+    };}
+    console.log(value);
+    res.render('index', data);
+    
+});
+});
+router.get('/getLoyal', function (req, res, next) {//display customer data
+  var query = `select * from loyalty natural join customer natural join customer_phone natural join customer_email;`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //addSupplier
 ///deleteProduct
 // http://localhost:3000/setProductData
