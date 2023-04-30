@@ -287,7 +287,44 @@ const orderDate=req.body.order_Date;
     res.render("index",data);
   });
 });
-
+router.get('/getOrder', function (req, res, next) {//display customer data
+  var query = `SELECT oi.orderid, c.firstname, c.lastname,
+  SUM(p.c_price * oi.quantity) * 
+  CASE l.type
+       WHEN 'Silver' THEN 0.95
+       WHEN 'Gold' THEN 0.9
+       WHEN 'Platinum' THEN 0.8
+       ELSE 1
+  END AS total_amt,
+  l.type AS loyalty_type
+  FROM orders o
+  JOIN customer c ON o.customerid = c.customerid
+  JOIN Order_Info oi ON o.orderid = oi.orderid
+  JOIN product p ON oi.productid = p.productid
+  JOIN loyalty l ON c.customerid = l.customerid
+  WHERE o.orderid = 1
+  GROUP BY oi.orderid, c.firstname, c.lastname, l.type`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
+router.get('/fiterProduct', function (req, res, next) {//display customer data
+  const productCategory=req.body.product_select;
+  var query = `SELECT s.name, p.category, COUNT(*) AS num_products_ordered
+  FROM supplier s
+  JOIN product p ON s.supplierid = p.supplierid
+  JOIN order_info oi ON p.productid = oi.productid
+  WHERE p.category = '${productCategory}';
+  GROUP BY s.name, p.category
+  ORDER BY num_products_ordered DESC;`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
 
 
 
