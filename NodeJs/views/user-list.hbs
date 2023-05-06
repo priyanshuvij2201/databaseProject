@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Fetch using MySQL and Node.js</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="table-data">
+
+      <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Supplier Name</th>
+            <th scope="col">ID#</th>
+            <th scope="col">Category</th>
+            <th scope="col">Number of products ordered</th>
+        </tr>
+        {{#if userData.length}}
+          {{#each userData as |data i|}}
+            <tr>
+            
+              <td>{{data.Supplier_Name}}</td>
+              <td>{{data.id}}</td>
+              <td>{{data.category}}</td>
+              <td>{{data.num_products_ordered}}</td>
+            </tr>
+          {{/each}}
+        {{else}}
+          <tr>
+            <td colspan="7">No Data Found</td>
+          </tr>
+        {{/if}}
+        </thead>
+      </table>
+    </div>
+  </body>
+</html>

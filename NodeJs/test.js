@@ -288,7 +288,7 @@ const orderDate=req.body.order_Date;
   });
 });
 router.get('/getOrder', function (req, res, next) {//display customer data
-  var query = `SELECT oi.orderid, c.firstname, c.lastname,
+  var query = `SELECT oi.orderid, c.firstname, c.lastname, c.customerid,
   SUM(p.c_price * oi.quantity) * 
   CASE l.type
        WHEN 'Silver' THEN 0.95
@@ -297,34 +297,37 @@ router.get('/getOrder', function (req, res, next) {//display customer data
        ELSE 1
   END AS total_amt,
   l.type AS loyalty_type
-  FROM orders o
-  JOIN customer c ON o.customerid = c.customerid
-  JOIN Order_Info oi ON o.orderid = oi.orderid
-  JOIN product p ON oi.productid = p.productid
-  JOIN loyalty l ON c.customerid = l.customerid
-  WHERE o.orderid = 1
-  GROUP BY oi.orderid, c.firstname, c.lastname, l.type`;
+FROM orders o
+JOIN customer c ON o.customerid = c.customerid
+JOIN Order_Info oi ON o.orderid = oi.orderid
+JOIN product p ON oi.productid = p.productid
+LEFT JOIN loyalty l ON c.customerid = l.customerid   
+GROUP BY oi.orderid, c.firstname, c.lastname, c.customerid, l.type;
+;`
   connection.query(query, function (err, rows, fields) {
     if (err) throw err;
     res.json(rows);
     //res.render("products", { title: "Products", products: rows });
   });
 });
-router.get('/fiterProduct', function (req, res, next) {//display customer data
-  const productCategory=req.body.product_select;
-  var query = `SELECT s.name, p.category, COUNT(*) AS num_products_ordered
+router.post('/filterProductCategory', function (req, res, next) {//display customer data
+  
+   const productCategoryFilter=req.body.product_select;
+  var query = `SELECT s.name as Supplier_Name,s.supplierid as id,p.category, COUNT(*) AS num_products_ordered
   FROM supplier s
   JOIN product p ON s.supplierid = p.supplierid
   JOIN order_info oi ON p.productid = oi.productid
-  WHERE p.category = '${productCategory}';
-  GROUP BY s.name, p.category
+  WHERE p.category = '${productCategoryFilter}'
+  GROUP BY s.name, p.category,s.supplierid
   ORDER BY num_products_ordered DESC;`;
   connection.query(query, function (err, rows, fields) {
     if (err) throw err;
-    res.json(rows);
+    
+    res.render('user-list', { title: 'User List', userData: rows});
     //res.render("products", { title: "Products", products: rows });
   });
 });
+
 
 
 
