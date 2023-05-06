@@ -327,8 +327,61 @@ router.post('/filterProductCategory', function (req, res, next) {//display custo
     //res.render("products", { title: "Products", products: rows });
   });
 });
-
-
+router.post('/UpdateProductData', function (req, res, next) {//inserting product and checking if suppplier exists
+  const productCategory=req.body.product_select
+  console.log(productCategory);  
+  const productId=req.body.product_id;
+const productName=req.body.product_name;
+const productCPrice=req.body.p_customer_price;
+const productSPrice=req.body.p_supplier_price;
+const productQty=req.body.quantity;
+const productSuppId=req.body.supplier_id;
+const productExpiryDate=req.body.expiry;
+console.log(req.body.expiry);
+var value =1;
+  var query = `
+  UPDATE product 
+  SET name = '${productName}', 
+  category = '${productCategory}', 
+  c_price = '${productCPrice}', 
+  s_price = '${productSPrice}', 
+  quantity = '${productQty}', 
+  expiry = '${productExpiryDate}' 
+  WHERE productid = ${productId};`;
+  
+  // connection.query(query1, function (err, rows, fields) {
+  //   if (err) throw err;
+  //   // res.json(rows);
+  //   value = rows[0]['count(*)'];
+  //    console.log(value); // Output: 0 (or the actual value of rows[0]['count(*)'])
+  //  if(value==0){
+  //   const data = {
+  //     title: 'Add Product',
+  //     body: '<p>Invalid Supplier Id!</p>'
+  //   };
+  //   res.render('index', data);}
+  // });  
+  // console.log(value);
+  
+  // if(value!=0){
+    
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    var data = {
+      title: 'Product',
+      body: '<p>Product updated successfully, Please visit view page to see your changes</p>'
+    };
+    value=rows.affectedRows;
+    if(value==0){
+    data = {
+      title: 'Add Product',
+      body: '<p>Invalid data no rows effected</p>'
+    };}
+    console.log(value);
+    res.render('index', data);
+    
+});
+});
 
 
 
