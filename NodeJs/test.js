@@ -580,7 +580,53 @@ const employeephone=req.body.c_phone;
     res.render("index",data);
   });
 });
+router.post('/updateOrder', function (req, res, next) {//inserting supplier and supplier_phone
+  
+  const orderid=req.body.order_id;
+const orderEmployeeId=req.body.employee_id;
+const orderProduct=req.body.product_id;
+const orderQty=req.body.quantity;
+const orderCustId=req.body.customer_id;
 
+  var query = `UPDATE Order_Info
+  SET quantity = ${orderQty}
+  WHERE orderid =${orderid} AND productid = ${orderProduct};`;
+  
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    const data = {
+      title: 'Update Order',
+      body: '<p>Successfully updated order</p>'
+    };
+    
+    res.render("index",data);
+  });
+});
+router.post('/addReview', function (req, res, next) {//inserting supplier and supplier_phone
+  
+  const customerId=req.body.c_id;
+  const productId=req.body.p_id;
+  const rating=req.body.product_select;  
+  const review=req.body.message;
+  console.log(review);  
+  var query = `INSERT INTO reviews (customerid, productid, rating,review)
+  VALUES (${customerId}, ${productId}, ${rating},'${review}');`;
+  
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    const data = {
+      title: 'Add Review',
+      body: '<p>Successfully added Review</p>'
+    };
+
+    res.render("index",data);
+  });
+});
+
+
+
+//INSERT INTO reviews (customerid, productid, rating,review)
+// VALUES (${customerId}, ${productId}, ${rating},'${review});
 
 
 
