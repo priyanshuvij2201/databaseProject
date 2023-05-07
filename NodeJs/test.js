@@ -304,11 +304,30 @@ JOIN product p ON oi.productid = p.productid
 LEFT JOIN loyalty l ON c.customerid = l.customerid   
 GROUP BY oi.orderid, c.firstname, c.lastname, c.customerid, l.type;
 ;`
+
+var amount;
+var customerid;
+var orderid;
+
   connection.query(query, function (err, rows, fields) {
     if (err) throw err;
+    amount=rows[0].total_amt;
+    customerid=rows[0].customerid;
+    orderid=rows[0].orderid;
+    console.log(amount+" "+customerid+" "+orderid);
     res.json(rows);
+    
     //res.render("products", { title: "Products", products: rows });
   });
+//   var query1=`INSERT INTO c_payment (customerid, c_paymentid, orderid, pdate, amount)
+// VALUES (${customerid}, NULL, ${orderid}, '2023-10-10',${amount} );`
+// connection.query(query1, function (err, rows, fields) {
+//   if (err) throw err;
+  
+  
+//   //res.render("products", { title: "Products", products: rows });
+// });
+  
 });
 router.post('/filterProductCategory', function (req, res, next) {//display customer data
   
@@ -478,6 +497,95 @@ console.log(supplierid);
     res.render("index",data);
   });
 });
+router.post('/generateBill', function (req, res, next) {//display customer data
+  const orderId=req.body.order_id;
+  var query = `SELECT oi.orderid, c.firstname, c.lastname, c.customerid,o.orderdate,
+  SUM(p.c_price * oi.quantity) * 
+  CASE l.type
+       WHEN 'Silver' THEN 0.95
+       WHEN 'Gold' THEN 0.9
+       WHEN 'Platinum' THEN 0.8
+       ELSE 1
+  END AS total_amt,
+  l.type AS loyalty_type
+FROM orders o
+JOIN customer c ON o.customerid = c.customerid
+JOIN Order_Info oi ON o.orderid = oi.orderid
+JOIN product p ON oi.productid = p.productid
+LEFT JOIN loyalty l ON c.customerid = l.customerid 
+where oi.orderid=${orderId}
+GROUP BY oi.orderid, c.firstname, c.lastname, c.customerid, l.type,o.orderdate;
+;`
+
+var amount;
+var customerid;
+var orderid;
+var orderDate;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    amount=rows[0].total_amt;
+    customerid=rows[0].customerid;
+    orderid=rows[0].orderid;
+    orderDate=rows[0].orderdate;
+  var formattedDate = orderDate.toLocaleDateString('en-GB', { 
+    year: 'numeric', 
+    month: '2-digit', 
+    day: '2-digit'
+  }).replace(/\//g, '-');
+  console.log(formattedDate);
+  var [day, month, year] = formattedDate.split('-').map((part) => parseInt(part));
+var monthS=month;
+var dateS=day;
+if (month<=9){
+  monthS="0"+month;
+}
+if(day<=9){
+  dateS="0"+day;
+}
+
+var finalDate=year+"-"+monthS+"-"+dateS;
+console.log(finalDate);
+    console.log(amount+" "+customerid+" "+orderid+" "+orderDate);
+    var query1=`INSERT INTO c_payment (customerid, c_paymentid, orderid, pdate, amount)
+    VALUES (${customerid},  ${orderid}, ${orderid}, '${finalDate}',${amount} );`
+    connection.query(query1, function (err, rows, fields) {
+      if (err) throw err;
+      res.render('generateBill',{ price: amount })
+      //res.render("products", { title: "Products", products: rows });
+    });
+    
+    //res.render("products", { title: "Products", products: rows });
+  });
+
+  
+  
+});
+router.post('/updateEmployee', function (req, res, next) {//inserting employee and employee_age
+  console.log("hello");
+  const employeeid=req.body.Employee_id;
+const employeename=req.body.Employee_name;
+const employeedob=req.body.dob;
+const employeephone=req.body.c_phone;
+
+  var query = `UPDATE employee
+  SET name = '${employeename}',
+  dob ='${employeedob}'
+  WHERE employeeid = ${employeeid};`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    const data = {
+      title: 'Update Employee',
+      body: '<p>Successfully updated Employee</p>'
+    };
+    res.render("index",data);
+  });
+});
+
+
+
+
+
+
 // //UPDATE supplier
 // JOIN supplier_phone ON supplier.supplierid = supplier_phone.supplierid
 // SET supplier.name = '${suppliername}',

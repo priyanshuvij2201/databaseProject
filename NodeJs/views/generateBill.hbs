@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>j</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="mb-3">
+            <label for="p_supplier_price" class="form-label"
+              >Total Price </label>
+              <span class="input-group-text" id="customer_id">Discount Applied as per Membership </span>
+            <div class="input-group mb-3">
+              <span class="input-group-text">₹</span>
+              <input
+                placeholder="{{price}}"
+                type="text"
+                class="form-control"
+                aria-label="Price"
+                name="p_supplier_price"
+                id="p_supplier_price"
+              />
+              <span class="input-group-text"></span>
+            </div>
+          </div>
+
+      {{!-- <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">ID#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">SP</th>
+            <th scope="col">CP</th>
+            <th scope="col">Supplier ID#</th>
+            <th scope="col">Quantity</th>
+          
+        </tr>
+        {{#if userData.length}}
+          {{#each userData as |data i|}}
+            <tr>
+              <td>{{data.id}}</td>
+              <td>{{data.name}}</td>
+              <td>{{data.category}}</td>
+              <td>{{data.c_price}}</td>
+              <td>{{data.s_price}}</td>
+              <td>{{data.supplierid}}</td>
+              <td>{{data.quantity}}</td>
+
+            </tr>
+          {{/each}}
+        {{else}}
+          <tr>
+            <td colspan="7">No Data Found</td>
+          </tr>
+        {{/if}}
+        </thead>
+      </table> --}}
+    </div>
+  </body>
+</html>
