@@ -382,6 +382,108 @@ var value =1;
     
 });
 });
+router.post('/filterProductByPrice', function (req, res, next) {//display customer data
+  
+ const maxPrice=Number.parseInt(req.body.maxPrice,10);
+  
+ const minPrice=Number.parseInt(req.body.minPrice,10);
+ console.log(minPrice+" "+maxPrice);
+ var query = `call filter_products_by_price_range_(${minPrice},${maxPrice});`;
+ connection.query(query, function (err, rows, fields) {
+   if (err) throw err;
+   console.log(rows[0][0].expiry);
+   res.render("filterProductDisp",{ title: "User List", userData: rows[0]});
+   //res.render("products", { title: "Products", products: rows });
+ });
+});
+router.post('/UpdateCustomer', function (req, res, next) {//inserting customer,customer_phone & customer_email
+  
+const customerId=req.body.c_id;
+const customerFName=req.body.customer_f_name;
+const customerLName=req.body.customer_l_name;
+const customerAddress=req.body.address;
+const custPhone=req.body.c_phone;
+console.log(customerId);
+  var query = `UPDATE customer c
+  JOIN customer_phone cp ON c.customerid = cp.customerid
+  SET c.firstname = '${customerFName}', c.lastname = '${customerLName}', c.address = '${customerAddress}', cp.phone = ${custPhone}
+  WHERE c.customerid = ${customerId}`;
+   console.log(customerId);
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    // res.json(rows);
+    var data = {
+      title: 'Update Customer',
+      body: '<p>Customer updated successfully, Please visit view page to see your changes</p>'
+    };
+    value=rows.affectedRows;
+    if(value==0){
+    data = {
+      title: 'Update Customer',
+      body: '<p>Invalid data no rows effected</p>'
+    };}
+    res.render('index',data);
+  });
+});
+router.get('/filterOrderByCount', function (req, res, next) {//display customer data
+  var query = `SELECT c.customerid, c.firstname, c.lastname, COUNT(o.orderid) as order_count
+  FROM customer c
+  JOIN orders o ON c.customerid = o.customerid
+  GROUP BY c.customerid, c.firstname, c.lastname
+  ORDER BY order_count DESC;`
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
+router.get('/filterOrderByCustomer', function (req, res, next) {//display customer data
+  var query = `SELECT c.customerid, c.firstname, c.lastname, SUM(cp.amount) as total_spent
+  FROM customer c
+  JOIN c_payment cp ON c.customerid = cp.customerid
+  GROUP BY c.customerid, c.firstname, c.lastname
+  ORDER BY total_spent DESC
+  LIMIT 10;`
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
+router.post('/UpdateSupplier', function (req, res, next) {//inserting supplier and supplier_phone
+  console.log("hello");
+  const supplierid=req.body.s_id;
+const suppliername=req.body.supplier_f_name;;
+const supplieraddress=req.body.address;
+const supplierphone=req.body.c_phone;
+console.log(supplierid);
+  var query = `UPDATE supplier
+  JOIN supplier_phone ON supplier.supplierid = supplier_phone.supplierid
+  SET supplier.name = '${suppliername}',
+  supplier.address = '${supplieraddress}',    supplier_phone.phone = ${supplierphone}
+  WHERE supplier.supplierid = ${supplierid}`;
+
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    var data = {
+      title: 'Updated Supplier',
+      body: '<p>Successfully updated Supplier</p>'
+    };
+    value=rows.affectedRows;
+    if(value==0){
+    data = {
+      title: 'Update Customer',
+      body: '<p>Invalid data no rows effected</p>'
+    };}
+    res.render("index",data);
+  });
+});
+// //UPDATE supplier
+// JOIN supplier_phone ON supplier.supplierid = supplier_phone.supplierid
+// SET supplier.name = '${suppliername}',
+//     supplier.address = '${supplieraddress}',
+//     supplier_phone.phone = '${supplierphone}'
+// WHERE supplier.supplierid = ${supplierid};
 
 
 
@@ -393,13 +495,6 @@ var value =1;
 
 
 
-
-//addSupplier
-///deleteProduct
-// http://localhost:3000/setProductData
-// insert into customer_phone values(${customerId},${custPhone})
-// router.get("/carcategory", function (req, res, next) {
-//   var query = "select * from car_category";
 
 //   connection.query(query, function (err, rows, fields) {
 //     if (err) throw err;
