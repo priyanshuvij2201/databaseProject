@@ -571,29 +571,29 @@
 
       <br><br><br>
 
-      <form method="get" id="getForm">
+      <form method="post" action="http://localhost:3000/filterProductByPrice">
 
         <h1>Products in the price range</h1>
 
         <br>
         <div class="mb-3">
-          <label for="product_name" class="form-label">Maximum Price</label>
+          <label for="product_name" class="form-label">Minimum Price</label>
           <input
-            type="text"
+            type="number"
             class="form-control"
             id="product_name"
             aria-describedby="emailHelp"
-            name="product_name"
+            name="minPrice"
           />
         </div>
         <div class="mb-3">
-          <label for="product_name" class="form-label">Minimum Price</label>
+          <label for="product_name" class="form-label">Maximum Price</label>
           <input
-            type="text"
+            type="number"
             class="form-control"
             id="product_name"
             aria-describedby="emailHelp"
-            name="product_name"
+            name="maxPrice"
           />
         </div>
 
