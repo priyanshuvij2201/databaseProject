@@ -15,6 +15,7 @@ const totalRevenue=document.querySelector("#Revenue");
 
 const countOrder=document.querySelector("#Purchases");
 // countOrder.textContent = "330";
+const tableDisp=document.querySelector("#tableDisplay");
 
 var serverUrl;
 function getTranslateUrl(){
@@ -39,6 +40,13 @@ window.onload = (e) => {
 
     serverUrl="http://localhost:3000/updateMonthEarning";
     updateMonthEarning();
+    serverUrl="http://localhost:3000/updateRecentTransaction";
+    clickEventHandler();
+
+    serverUrl="http://localhost:3000/countLoyalCustomer";
+    countLoyalCustomer();
+
+    changeKeyframes();
 
     serverUrl="http://localhost:3000/countLoyalCustomer";
     countLoyalCustomer();
@@ -150,12 +158,12 @@ function updateMonthEarning(){
                              json.forEach(element => {
                                 
                                          
-                                
+                                console.log(element.orderid);
                                      temp += "<tr>";
                                      temp += "<td>" + element.orderid + "</td>";
                                      temp += "<td>" + element.firstname + element.lastname+ "</td>";
-                                     temp += "<td>" + element.total_amt + "</td>";
-                                     temp += "<td>" + element.date + "</td></tr>";
+                                     temp += "<td>" + element.total_amount + "</td>";
+                                     temp += "<td>" + element.payment_date.substring(0,10) + "</td></tr>";
                              });
                              tableDisp.innerHTML=temp;
                           })
