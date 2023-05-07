@@ -622,6 +622,18 @@ router.post('/addReview', function (req, res, next) {//inserting supplier and su
     res.render("index",data);
   });
 });
+router.get('/countLoyalCustomer', function (req, res, next) {//display customer data
+  var query = `SELECT COUNT(DISTINCT c.customerid) AS customers_with_loyalty,
+  COUNT(DISTINCT c2.customerid) AS total_customers
+FROM customer c
+LEFT JOIN loyalty l ON c.customerid = l.customerid
+JOIN customer c2 ON c.customerid = c2.customerid;`
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
 
 
 

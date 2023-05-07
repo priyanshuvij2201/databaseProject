@@ -40,6 +40,11 @@ window.onload = (e) => {
     serverUrl="http://localhost:3000/updateMonthEarning";
     updateMonthEarning();
 
+    serverUrl="http://localhost:3000/countLoyalCustomer";
+    countLoyalCustomer();
+
+    changeKeyframes();
+
 }
 
 
@@ -110,8 +115,29 @@ function updateMonthEarning(){
                             console.log("Error:", error);
                           });
                         }
-
-
+                        var loyalCust;
+                        var totalCust;
+                        var a=0;
+     function countLoyalCustomer(){
+                        fetch(getTranslateUrl(serverUrl))
+                        .then(Response => Response.json())
+                      .then(json => {
+                           loyalCust=json[0].customers_with_loyalty;
+                           totalCust=json[0].total_customers;
+                           a=loyalCust/totalCust;
+                              })
+                              .catch(error => {
+                                console.log("Error:", error);
+                              });
+                            }
+               
+    
+    
+                        //         SELECT COUNT(DISTINCT c.customerid) AS customers_with_loyalty,
+                //         COUNT(DISTINCT c2.customerid) AS total_customers
+                //  FROM customer c
+                //  LEFT JOIN loyalty l ON c.customerid = l.customerid
+                //  JOIN customer c2 ON c.customerid = c2.customerid;
 
 
 
@@ -135,58 +161,45 @@ function updateMonthEarning(){
                           })
                           .catch(errorhandler)
  }
- router.get('/updateCountOrder', function (req, res, next) {
-  var query = `SELECT COUNT(*) AS total_orders FROM orders;`;
-  connection.query(query, function (err, rows, fields) {
-    if (err) throw err;
-    res.json(rows);
-  });
-});
+ function changeKeyframes() {
+    var styleSheet = document.styleSheets[0]; // Get the first stylesheet (you may need to adjust the index)
 
-router.get('/updateTotalRevenue', function (req, res, next) {
-    var query = `SELECT SUM(amount) AS total_revenue
-    FROM orders o
-    JOIN c_payment p ON o.orderid = p.orderid;`;
-    connection.query(query, function (err, rows, fields) {
-      if (err) throw err;
-      res.json(rows);
-    });
-  });
+    // Find the desired keyframes rule and modify its properties
+    for (var i = 0; i < styleSheet.cssRules.length; i++) {
+      var rule = styleSheet.cssRules[i];
+      var deg=360*a;
+      var degl1,degl2;
+      if(deg>180){
+      degl1=180;
+      degl2=deg-180;}
+      else{
+        degl2=0;
+        degl1=deg;
+      }
+      if (rule.name === "loading-1") {
+        console.log("h");
+        rule.deleteRule("0%");
+        rule.deleteRule("100%");
+        rule.appendRule("0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }");
+        rule.appendRule(`100% { -webkit-transform: rotate(${degl1}deg); transform: rotate(${degl1}deg); }`);
+      } else if (rule.name === "loading-2") {
+        rule.deleteRule("0%");
+        rule.deleteRule("100%");
+        rule.appendRule("0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }");
+        rule.appendRule(`100% { -webkit-transform: rotate(${degl2}deg); transform: rotate(${degl2}deg); }`);
+      }
+    }
+  }
+  
 
 
-  router.get('/updateTotalCustomer', function (req, res, next) {
-    var query = `SELECT COUNT(customerid) AS total_customers
-    FROM customer;`;
-    connection.query(query, function (err, rows, fields) {
-      if (err) throw err;
-      res.json(rows);
-    });
-  });
 
-  router.get('/updateTotalReviews', function (req, res, next) {
-    var query = `SELECT COUNT(*) as total_reviews FROM reviews;`;
-    connection.query(query, function (err, rows, fields) {
-      if (err) throw err;
-      res.json(rows);
-    });
-  });
 
-  router.get('/updateAverageRating', function (req, res, next) {
-    var query = `SELECT AVG(rating) AS average_rating FROM reviews;`;
-    connection.query(query, function (err, rows, fields) {
-      if (err) throw err;
-      res.json(rows);
-    });
-  });
 
-  router.get('/updateMonthEarning', function (req, res, next) {
-    var query = `SELECT SUM(quantity * c_price) as revenue
-    FROM orders
-    INNER JOIN Order_Info ON orders.orderid = Order_Info.orderid
-    INNER JOIN product ON Order_Info.productid = product.productid
-    WHERE orders.orderdate >= DATE_SUB(NOW(), INTERVAL 30 DAY);`;
-    connection.query(query, function (err, rows, fields) {
-      if (err) throw err;
-      res.json(rows);
-    });
-  });
+
+
+
+
+
+
+
