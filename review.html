@@ -512,7 +512,7 @@
     </span>
 
 <span class="main-form">
-      <form>
+      <form method="post" action="http://localhost:3000/addReview">
         <div class="mb-3">
           <label for="c_id" class="form-label">Customer ID</label>
           <div class="input-group mb-3">
@@ -545,7 +545,21 @@
 
           <div class="mb-3">
             <label for="customRange3" class="form-label">Rate Us!</label>
-            <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3">
+            <select
+            class="form-select"
+            class="form-control"
+            aria-label="Default select example"
+            id="product_select"
+            name="product_select"
+          >
+            <option selected>Select</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+
+          </select>
           </div>
 
           <div class="mb-3">
@@ -583,9 +597,16 @@
           <div class="mb-3">
             <label for="p_id" class="form-label">Drop your Reviews here!!</label>
             <span class="input-group-text">Review</span>
-            <textarea class="form-control" aria-label="With textarea"></textarea>
+            <textarea class="form-control" aria-label="With textarea" name="message"></textarea>
           </div>
-
+          <button
+          type="submit"
+          class="btn btn-primary"
+          name="add_product_submit"
+          id="add_product_submit"
+        >
+          Submit
+        </button>
  
       </form>
     </span>
