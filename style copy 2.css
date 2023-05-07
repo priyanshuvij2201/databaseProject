@@ -1,5 +1,15 @@
 @import "bootstrap/scss/bootstrap";
 
+.custom-background1 {
+  height: 100%;
+  background: rgb(255,253,208);
+  background: linear-gradient(0deg, rgba(255,253,208,1) 0%, rgba(11,195,198,1) 100%);
+  overflow: hidden;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 *{
     margin: 0;
     padding: 0;
