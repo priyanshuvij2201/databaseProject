@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head class="custom-background" class="text-white">
+  <head class="custom-background1">
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="style.css" />
-
-
-
+    <link rel="stylesheet" href="style copy.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -26,11 +22,7 @@
 
     <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet" />
     <title>Department Store Management System</title>
-
-
-
     <style>
-
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -105,23 +97,19 @@
         z-index: 1500;
       }
     </style>
-
-
   </head>
 
-  <body class="custom-background">
-
-    <div class="background-image-example"></div>
-    <span class="d-flex align-items-center">
+  <body class="custom-background1">
+    <span class="d-flex align-items-center ">
       <div class="flex-shrink-0 p-3" style="width: 280px">
         <a
           href="/"
           class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none  admin"
         >
           <svg class="bi pe-none me-2" width="24" height="24">
-            <use xlink:href="#bootstrap" />
+            <use xlink:href="#bootstrap"/>
           </svg>
-          <span class="fs-5 fw-semibold admin text-white"><b>Hi</b>साब-<b>Ki</b>ताब </span>
+          <span class="fs-5 fw-semibold admin"><b>Hi</b>साब-<b>Ki</b>ताब </span>
         </a>
       </div>
 
@@ -129,8 +117,8 @@
         class="navbar navbar-expand-lg rounded w-100"
         aria-label="Eleventh navbar example"
       >
-        <div class="container-fluid">
-          <button
+        <div class="container-fluid custom-background1" >
+          <!-- <button
             class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
@@ -140,13 +128,13 @@
             aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
-          </button>
+          </button> -->
 
-          <div class="collapse navbar-collapse ms-auto" id="navbarsExample09">
+          <!-- <div class="collapse navbar-collapse ms-auto" id="navbarsExample09">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
               <li class="nav-item">
-                <a class="nav-link active text-white fs-5 fw-semibold admin text-white" aria-current="page" href="#" >Home</a>
-              </li>
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li> -->
               <!-- <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
               </li> -->
@@ -168,66 +156,65 @@
                     </li>
                   </ul>
                 </li> -->
-            </ul>
-            <!-- <form role="search">
+            <!-- </ul>
+            <form role="search">
               <input
                 class="form-control"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
-              />
+              /> 
             </form> -->
           </div>
         </div>
       </nav>
     </span>
 
-    <span class="main-navbar" >
+    <span class="main-navbar">
       <ul class="list-unstyled ps-0">
         <li class="mb-1">
           <button
-            class="btn btn-toggle d-inline-flex align-items-center rounded collapsed text-white"
+            class="btn btn-toggle d-inline-flex align-items-center rounded collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#home-collapse"
             aria-expanded="false"
           >
             Product
           </button>
-          <div class="collapse show" id="home-collapse">
+          <div class="collapse" id="home-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
               <li>
                 <a
                   href="add_product.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >Add Product</a
                 >
               </li>
               <li>
                 <a
                   href="viewProduct.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >View Products</a
                 >
               </li>
               <li>
                 <a
                   href="delete_product.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
-                  
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >Delete Product </a
                 >
               </li>
               <li>
                 <a
                   href="filter_product.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >Filter Products</a
                 >
               </li>
               <li>
                 <a
                   href="update_product.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >Update Product</a
                 >
               </li>
@@ -236,47 +223,47 @@
         </li>
         <li class="mb-1">
           <button
-            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#dashboard-collapse"
             aria-expanded="false"
           >
             Customer
           </button>
-          <div class="collapse" id="dashboard-collapse">
+          <div class="collapse show" id="dashboard-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
               <li>
                 <a
                   href="addCustomer.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >Add Customer</a
                 >
               </li>
               <li>
                 <a
                   href="viewCustomer.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >View Customer</a
                 >
               </li>
               <li>
                 <a
                   href="deleteCustomer.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >Delete Customer</a
                 >
               </li>
               <li>
                 <a
                   href="filterCustomer.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >Filter Customer</a
                 >
               </li>
               <li>
                 <a
                   href="updateCustomer.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >Update Customer</a
                 >
               </li>
@@ -321,7 +308,7 @@
 
         <li class="mb-1">
           <button
-            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#account-collapse"
             aria-expanded="false"
@@ -333,29 +320,35 @@
               <li>
                 <a
                   href="addSupplier.html"
-                  class="link-dark d-inline-flex text-decoration-none rounded text-white"
+                  class="link-dark d-inline-flex text-decoration-none rounded"
                   >Add Supplier</a
                 >
               </li>
               <li>
                 <a
                   href="viewSupplier.html"
-                  class="link-dark d-inline-flex text-decoration-none rounded text-white"
+                  class="link-dark d-inline-flex text-decoration-none rounded"
                   >View Supplier</a
-                >
-              </li>
-
-              <li>
-                <a
-                  href="updateSupplier.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
-                  >Update Supplier</a
                 >
               </li>
               <!-- <li>
                 <a
+                  href="deleteSupplier.html"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                  >Delete Supplier</a
+                >
+              </li>
+            -->
+                <a
+                  href="updateSupplier.html"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                  >Update Supplier</a
+                >
+              </li> 
+              <!-- <li>
+                <a
                   href="filterSupplier.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >Filter Supplier</a
                 >
               </li> -->
@@ -365,7 +358,7 @@
 
         <li class="mb-1">
           <button
-            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#employee-collapse"
             aria-expanded="false"
@@ -377,22 +370,28 @@
               <li>
                 <a
                   href="addEmployee.html"
-                  class="link-dark d-inline-flex text-decoration-none rounded text-white"
+                  class="link-dark d-inline-flex text-decoration-none rounded"
                   >Add Employee</a
                 >
               </li>
               <li>
                 <a
                   href="viewEmployee.html"
-                  class="link-dark d-inline-flex text-decoration-none rounded text-white"
+                  class="link-dark d-inline-flex text-decoration-none rounded"
                   >View Employee</a
                 >
               </li>
-
+              <!-- <li>
+                <a
+                  href="deleteEmployee.html"
+                  class="link-dark d-inline-flex text-decoration-none rounded"
+                  >Delete Employee</a
+                >
+              </li> -->
               <li>
                 <a
                   href="updateEmployee.html"
-                  class="link-dark d-inline-flex text-decoration-none rounded text-white"
+                  class="link-dark d-inline-flex text-decoration-none rounded"
                   >Update Employee</a
                 >
               </li>
@@ -402,7 +401,7 @@
 
         <li class="mb-1">
           <button
-            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#loyalty-collapse"
             aria-expanded="false"
@@ -414,24 +413,30 @@
               <li>
                 <a
                   href="addLoyalty.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >Add Loyal Customer</a
                 >
               </li>
               <li>
                 <a
                   href="viewLoyalty.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >View Loyal Customer</a
                 >
               </li>
-
+              <!-- <li>
+                <a
+                  href="deleteLoyalty.html"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                  >Delete Loyal Customer</a
+                >
+              </li> -->
             </ul>
           </div>
         </li>
         <li class="mb-1">
           <button
-            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#orders-collapse"
             aria-expanded="false"
@@ -443,70 +448,41 @@
               <li>
                 <a
                   href="addOrder.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >Place Order </a
                 >
               </li>
               <li>
                 <a
-                  href="generate_bill.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
-                  >Generate Bill </a
-                >
-              </li>
-              <li>
-                <a
                   href="viewOrder.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >View Orders</a>
               </li>
               <!-- <li>
                 <a
                   href="deleteOrder.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >Delete Orders</a>
               </li> -->
               <li>
                 <a
                   href="updateOrder.html"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >Update Orders</a>
+              </li>
+              <li>
+                <a
+                  href="generate_bill.html"
+                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                  >Generate Bill</a>
               </li>
             </ul>
           </div>
         </li>
-        <!-- <li class="mb-1">
-          <button
-            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-            data-bs-toggle="collapse"
-            data-bs-target="#orders-collapse"
-            aria-expanded="false"
-          >
-            Warranty
-          </button>
-          <div class="collapse" id="orders-collapse">
-            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-              <li>
-                <a
-                  href="#"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                  >Check Warranty</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                  >Raise Complaint</a
-                >
-              </li>
-            </ul>
-          </div>
-        </li> -->
-
+      
         <li class="mb-1">
           <button
-            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#review-collapse"
             aria-expanded="false"
@@ -518,237 +494,47 @@
               <li>
                 <a
                   href="review.html"
-                  class="link-dark d-inline-flex text-decoration-none rounded text-white"
+                  class="link-dark d-inline-flex text-decoration-none rounded"
                   >Add Review</a
                 >
               </li>
               <li>
-                <a 
+                <a
                   href="viewReview.html"
-                  class="link-dark d-inline-flex text-decoration-none rounded text-white"
+                  class="link-dark d-inline-flex text-decoration-none rounded"
                   >View Review</a
                 >
               </li>
             </ul>
           </div>
         </li>
-
       </ul>
+    </span>
+
+<span class="main-form">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Customer</th>
+            <th scope="col">Product</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Reviews</th>
+          </tr>
+        </thead>
+        <tbody id="tableDisplay">
+        </tbody >
+      </table>
+      <form id="getForm" method="GET">
+        <button type="button" id="getdata" class="btn btn-light">Get Data</button>
+        </form>
       
     </span>
-    <div id="stars"></div>
-    <div id="stars2"></div>
-    <div id="stars3"></div>
-
-    <div id="title">
-      <span>
-        DASHBOARD
-      </span>
-    </div>
-
-
-
-    <span class="main-form">
-
-      <div class="row my-3">
-   <div class="col-15 col-md-9 col-lg-4 mb-4 mb-lg-0">
-      <div class="card">
-          <h5 class="card-header">Customers</h5>
-          <div class="card-body">
-            <h5 class="card-title" id="t_customer">345k</h5>
-            <p class="card-text text-primary">All time Customers</p>
-            <!-- <p class="card-text text-success">18.2% increase since last month</p> -->
-          </div>
-        </div>
-  </div>
-  <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-4">
-      <div class="card">
-          <h5 class="card-header">Revenue</h5>
-          <div class="card-body">
-            <h5 class="card-title" id="Revenue">$2.4k</h5>
-            <p class="card-text text-primary">Total Revenue Till Date</p>
-            <!-- <p class="card-text text-success">4.6% increase since last month</p> -->
-          </div>
-        </div>
-  </div>
-  <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-4">
-      <div class="card">
-          <h5 class="card-header">Purchases</h5>
-          <div class="card-body">
-            <h5 class="card-title" id="Purchases">43</h5>
-            <p class="card-text text-primary">Total number of bill</p>
-            <!-- <p class="card-text text-danger">2.6% decrease since last month</p> -->
-          </div>
-        </div>
-  </div>
-
-
-  <div class="row d-flex justify-content-center mt-100 progress-container">
-
-    <div class="col-md-4">
-        <span class="pppp">
-          <span class="progress blue">
-            
-            <span class="progress-left">
-                              <span class="progress-bar"></span>
-            </span>
-            <span class="progress-right">
-                              <span class="progress-bar"></span>
-            </span>
-            <div class="progress-value">90%</div>
-          </span>
-        </span>
-        </div>
-        <div class="col-md-4">
-        <span class="pppp">
-          <span class="progress yellow">
-            <span class="progress-left">
-                            <span class="progress-bar"></span>
-            </span>
-            <span class="progress-right">
-                            <span class="progress-bar"></span>
-            </span>
-            <div class="progress-value">37.5%</div>
-          </span>
-        </span>
-        </div>
-
-
-        <div class="col-md-4">
-          <span class="pppp">
-            <span class="progress blue">
-              
-              <span class="progress-left">
-                                <span class="progress-bar"></span>
-              </span>
-              <span class="progress-right">
-                                <span class="progress-bar"></span>
-              </span>
-              <div class="progress-value">90%</div>
-            </span>
-          </span>
-          </div>
-
-        
-
-
-       
-    </div>
-   
-</div>
-
-  <br><br>
-<!-- 
-</div>
-<div class="col-xl-3 col-md-6 mb-4">
-  <div class="card border-left-primary shadow h-100 py-2">
-      <div class="card-body">
-          <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                      Earnings (Monthly)</div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-              </div>
-              <div class="col-auto">
-                  <i class="fas fa-calendar fa-2x text-gray-300"></i>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
-
-<div class="col-md-6 col-lg-6 col-xl-3">
-  <div class="card mg-b-30">
-     <div class="card-body">
-        <h5 class="tx-uppercase tx-spacing-1 tx-semibold tx-10 mg-b-2">Today Sales</h5>
-        <div class="d-flex justify-content-between align-items-center">
-           <h2 class="tx-20 tx-sm-18 tx-md-24 mg-b-0 tx-rubik tx-dark tx-normal">$1,181</h2>
-        </div>
-        <div class="d-flex align-items-center tx-gray-500 tx-11"><span class="tx-success mr-2 d-flex align-items-center"><i class="ti-arrow-up tx-8 mr-1 tx-8"></i>+1,551</span>since last day</div>
-     </div>
-  </div>
-</div>
-<div class="col main pt-5 mt-3">
-   -->
-  <div class="row mb-3">
-      <div class="col-xl-4 col-sm-83 py-2">
-          <div class="card bg-success text-white h-100">
-              <div class="card-body bg-success">
-                  <div class="rotate">
-                      <i class="fa fa-user fa-4x"></i>
-                  </div>
-                  <h6 class="text-uppercase">Monthly Earning</h6>
-                  <h1 class="display-4" id="Month_earning">134</h1>
-                  <span class="pp"><h2>₹₹₹₹₹₹</h2></span>
-              </div>
-          </div>
-      </div>
-      <div class="col-xl-4 col-sm-6 py-2">
-          <div class="card text-white bg-danger h-100">
-              <div class="card-body bg-danger">
-                  <div class="rotate">
-                      <i class="fa fa-list fa-4x"></i>
-                  </div>
-                  <h6 class="text-uppercase">Average Ratings </h6>
-                  
-                  <h2 class="display-4" id="Average_rating">87</h2>
-                  <span class="pp"><h2>⭐️⭐️⭐️⭐️⭐️</h2></span>
-              </div>
-          </div>
-      </div>
-      <div class="col-xl-4 col-sm-6 py-2">
-          <div class="card text-white bg-info h-100">
-              <div class="card-body bg-info">
-                  <div class="rotate">
-                      <i class="fa fa-twitter fa-4x"></i>
-                  </div>
-                  <h6 class="text-uppercase">Total Reviews</h6>
-                  <h1 class="display-4" id="Total_reviews">125</h1>
-                  <span class="pp"><h2>❤️❤️❤️❤️❤️</h2></span>
-              </div>
-          </div>
-      </div>
-
-  </div>
-
     
-<div class="row">
-  <div class="col-12 col-xl-120 mb-4 mb-lg-0">
-      <div class="card">
-          <h5 class="card-header">Latest transactions</h5>
-          <div class="card-body">
-              <div class="table-responsive">
-                  <table class="table">
-                      <thead>
-                        <tr>
-                          <th scope="col">Order</th>
-                          <th scope="col">Customer</th>
-                          <th scope="col">Total</th>
-                          <th scope="col">Date</th>
-                        </tr>
-                      </thead>
-                      <tbody id="tableDisplay">
-                      </tbody>
-                    </table>
-              </div>
-
-          </div>
-      </div>
-  </div>
-  <div class="col-12 col-xl-4">
-      <!-- Another widget will go here -->
-  </div>
-</div>
-
-
-    </span> 
-
-
-    <script src="index.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"
     ></script>
+    <script src="viewOrder.js"></script>
   </body>
 </html>
