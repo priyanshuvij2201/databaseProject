@@ -23,10 +23,11 @@ function clickEventHandler(){
     var temp = "";
     
     json.forEach(element => {
+      temp += "<tr>";
             temp += "<td>" + element.customerid + "</td>";
             temp += "<td>" + element.productid + "</td>";
             temp += "<td>" + element.rating + "</td>";
-            temp += "<td>" + element.review + "</td>";
+            temp += "<td>" + element.review + "</td></tr>";
     });
     tableDisp.innerHTML=temp;
  })

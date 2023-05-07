@@ -622,7 +622,84 @@ router.post('/addReview', function (req, res, next) {//inserting supplier and su
     res.render("index",data);
   });
 });
+router.get('/getReview', function (req, res, next) {//display customer data
+  var query = `SELECT *
+  FROM reviews`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
+router.get('/updateCountOrder', function (req, res, next) {//display customer data
+  var query = `SELECT COUNT(*) AS total_orders
+  FROM orders;`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
+router.get('/updateTotalRevenue', function (req, res, next) {
+  var query = `SELECT SUM(amount) AS total_revenue
+  FROM orders o
+  JOIN c_payment p ON o.orderid = p.orderid;`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+  });
+});
 
+
+router.get('/updateTotalCustomer', function (req, res, next) {
+  var query = `SELECT COUNT(customerid) AS total_customers
+  FROM customer;`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+  });
+});
+
+router.get('/updateTotalReviews', function (req, res, next) {
+  var query = `SELECT COUNT(*) as total_reviews FROM reviews;`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+  });
+});
+
+router.get('/updateAverageRating', function (req, res, next) {
+  var query = `SELECT AVG(rating) AS average_rating FROM reviews;`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+  });
+});
+
+router.get('/updateMonthEarning', function (req, res, next) {
+  var query = `SELECT SUM(Order_info.quantity * c_price) as revenue
+  FROM orders
+  INNER JOIN Order_Info ON orders.orderid = Order_Info.orderid
+  INNER JOIN product ON Order_Info.productid = product.productid
+  WHERE orders.orderdate >= DATE_SUB(NOW(), INTERVAL 30 DAY);`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+  });
+});
+router.get('/updateRecentTransaction', function (req, res, next) {
+  var query = `SELECT  o.orderid,c.firstname, c.lastname, SUM(p.amount) AS total_amount, MAX(p.pdate) AS payment_date
+  FROM c_payment AS p
+  INNER JOIN orders AS o ON p.orderid = o.orderid
+  INNER JOIN customer AS c ON o.customerid = c.customerid
+  GROUP BY o.orderid,c.firstname, c.lastname
+  ORDER BY payment_date DESC
+  LIMIT 10;`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+  });
+});
 
 
 //INSERT INTO reviews (customerid, productid, rating,review)

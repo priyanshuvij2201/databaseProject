@@ -15,6 +15,7 @@ const totalRevenue=document.querySelector("#Revenue");
 
 const countOrder=document.querySelector("#Purchases");
 // countOrder.textContent = "330";
+const tableDisp=document.querySelector("#tableDisplay");
 
 var serverUrl;
 function getTranslateUrl(){
@@ -39,6 +40,8 @@ window.onload = (e) => {
 
     serverUrl="http://localhost:3000/updateMonthEarning";
     updateMonthEarning();
+    serverUrl="http://localhost:3000/updateRecentTransaction";
+    clickEventHandler();
 
 }
 
@@ -124,69 +127,14 @@ function updateMonthEarning(){
                              json.forEach(element => {
                                 
                                          
-                                
+                                console.log(element.orderid);
                                      temp += "<tr>";
                                      temp += "<td>" + element.orderid + "</td>";
                                      temp += "<td>" + element.firstname + element.lastname+ "</td>";
-                                     temp += "<td>" + element.total_amt + "</td>";
-                                     temp += "<td>" + element.date + "</td></tr>";
+                                     temp += "<td>" + element.total_amount + "</td>";
+                                     temp += "<td>" + element.payment_date.substring(0,10) + "</td></tr>";
                              });
                              tableDisp.innerHTML=temp;
                           })
                           .catch(errorhandler)
  }
- router.get('/updateCountOrder', function (req, res, next) {
-  var query = `SELECT COUNT(*) AS total_orders FROM orders;`;
-  connection.query(query, function (err, rows, fields) {
-    if (err) throw err;
-    res.json(rows);
-  });
-});
-
-router.get('/updateTotalRevenue', function (req, res, next) {
-    var query = `SELECT SUM(amount) AS total_revenue
-    FROM orders o
-    JOIN c_payment p ON o.orderid = p.orderid;`;
-    connection.query(query, function (err, rows, fields) {
-      if (err) throw err;
-      res.json(rows);
-    });
-  });
-
-
-  router.get('/updateTotalCustomer', function (req, res, next) {
-    var query = `SELECT COUNT(customerid) AS total_customers
-    FROM customer;`;
-    connection.query(query, function (err, rows, fields) {
-      if (err) throw err;
-      res.json(rows);
-    });
-  });
-
-  router.get('/updateTotalReviews', function (req, res, next) {
-    var query = `SELECT COUNT(*) as total_reviews FROM reviews;`;
-    connection.query(query, function (err, rows, fields) {
-      if (err) throw err;
-      res.json(rows);
-    });
-  });
-
-  router.get('/updateAverageRating', function (req, res, next) {
-    var query = `SELECT AVG(rating) AS average_rating FROM reviews;`;
-    connection.query(query, function (err, rows, fields) {
-      if (err) throw err;
-      res.json(rows);
-    });
-  });
-
-  router.get('/updateMonthEarning', function (req, res, next) {
-    var query = `SELECT SUM(quantity * c_price) as revenue
-    FROM orders
-    INNER JOIN Order_Info ON orders.orderid = Order_Info.orderid
-    INNER JOIN product ON Order_Info.productid = product.productid
-    WHERE orders.orderdate >= DATE_SUB(NOW(), INTERVAL 30 DAY);`;
-    connection.query(query, function (err, rows, fields) {
-      if (err) throw err;
-      res.json(rows);
-    });
-  });
