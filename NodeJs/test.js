@@ -700,6 +700,19 @@ router.get('/updateRecentTransaction', function (req, res, next) {
     res.json(rows);
   });
 });
+router.get('/countLoyalCustomer', function (req, res, next) {//display customer data
+  var query = `SELECT 
+  COUNT(DISTINCT customer.customerid) AS total_customers,
+  COUNT(DISTINCT loyalty.customerid) AS loyalty_customers
+FROM 
+  customer 
+  LEFT JOIN loyalty ON customer.customerid = loyalty.customerid;`
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
 
 
 //INSERT INTO reviews (customerid, productid, rating,review)

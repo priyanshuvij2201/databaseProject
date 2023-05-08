@@ -16,6 +16,7 @@ const totalRevenue=document.querySelector("#Revenue");
 const countOrder=document.querySelector("#Purchases");
 // countOrder.textContent = "330";
 const tableDisp=document.querySelector("#tableDisplay");
+const percentDisplay=document.querySelector("#percentDisp");
 
 var serverUrl;
 function getTranslateUrl(){
@@ -38,20 +39,19 @@ window.onload = (e) => {
     serverUrl="http://localhost:3000/updateAverageRating";
     updateAverageRating();
 
+    serverUrl="http://localhost:3000/countLoyalCustomer";
+    countLoyalCustomer();
+    
+    
+
     serverUrl="http://localhost:3000/updateMonthEarning";
     updateMonthEarning();
     serverUrl="http://localhost:3000/updateRecentTransaction";
     clickEventHandler();
 
-    serverUrl="http://localhost:3000/countLoyalCustomer";
-    countLoyalCustomer();
+    
 
-    changeKeyframes();
-
-    serverUrl="http://localhost:3000/countLoyalCustomer";
-    countLoyalCustomer();
-
-    changeKeyframes();
+    
 
 }
 
@@ -126,13 +126,18 @@ function updateMonthEarning(){
                         var loyalCust;
                         var totalCust;
                         var a=0;
+
      function countLoyalCustomer(){
                         fetch(getTranslateUrl(serverUrl))
                         .then(Response => Response.json())
                       .then(json => {
-                           loyalCust=json[0].customers_with_loyalty;
+                        console.log("1");
+                           loyalCust=json[0].loyalty_customers;
                            totalCust=json[0].total_customers;
+                           console.log(loyalCust+" "+totalCust);
                            a=loyalCust/totalCust;
+                           changeKeyframes();
+                           
                               })
                               .catch(error => {
                                 console.log("Error:", error);
@@ -146,8 +151,6 @@ function updateMonthEarning(){
                 //  FROM customer c
                 //  LEFT JOIN loyalty l ON c.customerid = l.customerid
                 //  JOIN customer c2 ON c.customerid = c2.customerid;
-
-
 
  function clickEventHandler(){
                             fetch(getTranslateUrl(serverUrl))
@@ -169,7 +172,10 @@ function updateMonthEarning(){
                           })
                           .catch(errorhandler)
  }
+console.log("1");
+
  function changeKeyframes() {
+  console.log("h");
     var styleSheet = document.styleSheets[0]; // Get the first stylesheet (you may need to adjust the index)
 
     // Find the desired keyframes rule and modify its properties
@@ -184,6 +190,8 @@ function updateMonthEarning(){
         degl2=0;
         degl1=deg;
       }
+      var b=Math.round(a*100);
+      percentDisplay.innerHTML=b+"%";
       if (rule.name === "loading-1") {
         console.log("h");
         rule.deleteRule("0%");
