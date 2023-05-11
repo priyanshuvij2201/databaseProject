@@ -21,20 +21,22 @@ function clickEventHandler(){
    .then(Response => Response.json())
    .then(json => {
     var temp = "";
-    
+    if(json.length>0){
     json.forEach(element => {
        
                 
        
             temp += "<tr>";
             temp += "<td>" + element.orderid + "</td>";
-            temp += "<td>" + element.productid + "</td>";
             temp += "<td>" + element.firstname + "</td>";
             temp += "<td>" + element.lastname + "</td>";
+            temp += "<td>" + element.customerid + "</td>";
             temp += "<td>" + element.total_amt + "</td>";
             temp += "<td>" + element.loyalty_type + "</td></tr>";
     });
-    tableDisp.innerHTML=temp;
+    tableDisp.innerHTML=temp;}
+    else
+    alert("No pending Bills");
  })
  .catch(errorhandler)
 }
@@ -42,7 +44,7 @@ function clickEventHandler(){
 getData.addEventListener("click",(e)=>{
    e.preventDefault();
    console.log("ya");
-   serverUrl="http://localhost:3000/getOrder";
+   serverUrl="http://localhost:3000/pendingBill";
    clickEventHandler()});
 
 

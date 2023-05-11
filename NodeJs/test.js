@@ -26,6 +26,30 @@ router.get('/data', function (req, res, next) {//display customer data
     //res.render("products", { title: "Products", products: rows });
   });
 });
+router.get('/getName', function (req, res, next) {//display customer data
+  var query = `select * from customer ;`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
+router.get('/getProductName', function (req, res, next) {//display customer data
+  var query = `select * from product ;`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
+router.get('/getEmployeeName', function (req, res, next) {//display customer data
+  var query = `select * from employee ;`;
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    //res.render("products", { title: "Products", products: rows });
+  });
+});
 router.get('/getProductData', function (req, res, next) {//display product data
   var query = `select * from product`;
   
@@ -221,7 +245,19 @@ router.post('/setLoyal', function (req, res, next) {//inserting loyal customer a
   const custId=req.body.c_id;
 const loyaltyId=req.body.l_id;
 const loyaltyExpiryDate=req.body.l_expiry;
-console.log(req.body.expiry);
+const currentDate = new Date();
+const inputDate = new Date(loyaltyExpiryDate);
+if (inputDate > currentDate) {
+  console.log('Input date is greater than current date');
+} else if (inputDate < currentDate) {
+
+  console.log('Input date is less than current date');
+} else {
+  console.log('Input date is equal to current date');
+}
+
+
+
 var value =1;
   var query = `insert into loyalty (customerid,loyaltyid,type,expiry) SELECT ${custId},${loyaltyId},'${loyaltyCategory}','${loyaltyExpiryDate}' FROM dual
 WHERE (SELECT COUNT(*) FROM customer where customerid='${custId}') > 0;`;
@@ -241,9 +277,17 @@ WHERE (SELECT COUNT(*) FROM customer where customerid='${custId}') > 0;`;
   // console.log(value);
   
   // if(value!=0){
-    
+    if (inputDate < currentDate) {
+      var data = {
+        title: 'Add Loyalty',
+        body: '<p>Loyalty cannot be added Invalid Date</p>'
+      };
+      res.render('index', data);
+    }
+    else{
   connection.query(query, function (err, rows, fields) {
     if (err) throw err;
+    
     var data = {
       title: 'Add Loyalty',
       body: '<p>Loyalty added successfully</p>'
@@ -257,7 +301,7 @@ WHERE (SELECT COUNT(*) FROM customer where customerid='${custId}') > 0;`;
     console.log(value);
     res.render('index', data);
     
-});
+});}
 });
 router.get('/getLoyal', function (req, res, next) {//display customer data
   var query = `select * from loyalty natural join customer natural join customer_phone natural join customer_email;`;
@@ -278,16 +322,64 @@ const orderDate=req.body.order_Date;
   var query = `CALL insert_order_inf_(${orderid},${orderProduct},${orderQty},${orderCustId},${orderEmployeeId},'${orderDate}')`;
   
   connection.query(query, function (err, rows, fields) {
-    if (err) throw err;
-    const data = {
+    
+    var data = {
       title: 'Add Order',
       body: '<p>Successfully added order</p>'
     };
-    
+    if (err){
+      data = {
+        title: 'Add Order',
+        body: '<p>Invalid Data</p>'
+      };
+    } 
     res.render("index",data);
   });
 });
 router.get('/getOrder', function (req, res, next) {//display customer data
+  var query = `SELECT oi.orderid, c.firstname, c.lastname, c.customerid,oi.productid,
+  SUM(p.c_price * oi.quantity) * 
+  CASE l.type
+       WHEN 'Silver' THEN 0.95
+       WHEN 'Gold' THEN 0.9
+       WHEN 'Platinum' THEN 0.8
+       ELSE 1
+  END AS total_amt,
+  l.type AS loyalty_type
+FROM orders o
+JOIN customer c ON o.customerid = c.customerid
+JOIN Order_Info oi ON o.orderid = oi.orderid
+JOIN product p ON oi.productid = p.productid
+JOIN c_payment cp ON o.orderid = cp.orderid
+LEFT JOIN loyalty l ON c.customerid = l.customerid   
+GROUP BY oi.orderid, c.firstname, c.lastname, c.customerid, l.type,oi.productid;
+;`
+
+var amount;
+var customerid;
+var orderid;
+
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    amount=rows[0].total_amt;
+    customerid=rows[0].customerid;
+    orderid=rows[0].orderid;
+    console.log(amount+" "+customerid+" "+orderid);
+    res.json(rows);
+    
+    //res.render("products", { title: "Products", products: rows });
+  });
+//   var query1=`INSERT INTO c_payment (customerid, c_paymentid, orderid, pdate, amount)
+// VALUES (${customerid}, NULL, ${orderid}, '2023-10-10',${amount} );`
+// connection.query(query1, function (err, rows, fields) {
+//   if (err) throw err;
+  
+  
+//   //res.render("products", { title: "Products", products: rows });
+// });
+  
+});
+router.get('/pendingBill', function (req, res, next) {//display customer data
   var query = `SELECT oi.orderid, c.firstname, c.lastname, c.customerid,
   SUM(p.c_price * oi.quantity) * 
   CASE l.type
@@ -301,9 +393,10 @@ FROM orders o
 JOIN customer c ON o.customerid = c.customerid
 JOIN Order_Info oi ON o.orderid = oi.orderid
 JOIN product p ON oi.productid = p.productid
-LEFT JOIN loyalty l ON c.customerid = l.customerid   
-GROUP BY oi.orderid, c.firstname, c.lastname, c.customerid, l.type;
-;`
+LEFT JOIN c_payment cp ON oi.orderid = cp.orderid
+LEFT JOIN loyalty l ON c.customerid = l.customerid
+WHERE cp.orderid IS NULL 
+GROUP BY oi.orderid, c.firstname, c.lastname, c.customerid, l.type;`
 
 var amount;
 var customerid;
@@ -311,10 +404,12 @@ var orderid;
 
   connection.query(query, function (err, rows, fields) {
     if (err) throw err;
+    if(rows.length>0){
     amount=rows[0].total_amt;
     customerid=rows[0].customerid;
     orderid=rows[0].orderid;
     console.log(amount+" "+customerid+" "+orderid);
+    }
     res.json(rows);
     
     //res.render("products", { title: "Products", products: rows });
@@ -560,6 +655,47 @@ console.log(finalDate);
   
   
 });
+router.get('/orderCart', function (req, res, next) {//display customer data
+  const orderId=req.body.order_id;
+  var query = `SELECT oi.orderid, c.firstname, c.lastname, c.customerid, o.orderdate, p.productid, p.name,
+  SUM(p.c_price * oi.quantity) * 
+  CASE l.type
+       WHEN 'Silver' THEN 0.95
+       WHEN 'Gold' THEN 0.9
+       WHEN 'Platinum' THEN 0.8
+       ELSE 1
+  END AS total_amt,
+  SUM(p.c_price * oi.quantity) - SUM(p.c_price * oi.quantity) * 
+  CASE l.type
+       WHEN 'Silver' THEN 0.95
+       WHEN 'Gold' THEN 0.9
+       WHEN 'Platinum' THEN 0.8
+       ELSE 1
+  END AS discount,
+  l.type AS loyalty_type
+FROM orders o
+JOIN customer c ON o.customerid = c.customerid
+JOIN Order_Info oi ON o.orderid = oi.orderid
+JOIN product p ON oi.productid = p.productid
+LEFT JOIN loyalty l ON c.customerid = l.customerid 
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM c_payment cp
+  WHERE cp.orderid = oi.orderid
+)
+GROUP BY oi.orderid, c.firstname, c.lastname, c.customerid, l.type, o.orderdate, p.productid, p.name;`
+
+
+  connection.query(query, function (err, rows, fields) {
+    if (err) throw err;
+    res.json(rows);
+    
+    //res.render("products", { title: "Products", products: rows });
+  });
+
+  
+  
+});
 router.post('/updateEmployee', function (req, res, next) {//inserting employee and employee_age
   console.log("hello");
   const employeeid=req.body.Employee_id;
@@ -590,15 +726,28 @@ const orderCustId=req.body.customer_id;
 
   var query = `UPDATE Order_Info
   SET quantity = ${orderQty}
-  WHERE orderid =${orderid} AND productid = ${orderProduct};`;
+  WHERE orderid = ${orderid}
+    AND productid = ${orderProduct}
+    AND NOT EXISTS (
+      SELECT 1
+      FROM c_payment
+      WHERE c_payment.orderid = Order_Info.orderid
+    );`;
   
   connection.query(query, function (err, rows, fields) {
     if (err) throw err;
-    const data = {
+    value=rows.affectedRows;
+    if(value==0){
+    var data = {
       title: 'Update Order',
-      body: '<p>Successfully updated order</p>'
-    };
-    
+      body: '<p>Invalid data no rows effected</p>'
+    };}
+    else{
+    data = {
+      title: 'Update Order',
+      body: '<p>Updated Data</p>'
+    };}
+  
     res.render("index",data);
   });
 });
@@ -677,11 +826,10 @@ router.get('/updateAverageRating', function (req, res, next) {
 });
 
 router.get('/updateMonthEarning', function (req, res, next) {
-  var query = `SELECT SUM(Order_info.quantity * c_price) as revenue
-  FROM orders
-  INNER JOIN Order_Info ON orders.orderid = Order_Info.orderid
-  INNER JOIN product ON Order_Info.productid = product.productid
-  WHERE orders.orderdate >= DATE_SUB(NOW(), INTERVAL 30 DAY);`;
+  var query = `SELECT SUM(amount) AS total_revenue
+  FROM orders o
+  JOIN c_payment p ON o.orderid = p.orderid
+  WHERE p.pdate >= DATE_SUB(NOW(), INTERVAL 30 DAY);`;
   connection.query(query, function (err, rows, fields) {
     if (err) throw err;
     res.json(rows);

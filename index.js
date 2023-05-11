@@ -117,7 +117,7 @@ function updateMonthEarning(){
                         fetch(getTranslateUrl(serverUrl))
                           .then(Response => Response.json())
                           .then(json => {
-                            monthEarning.textContent = json[0].revenue;
+                            monthEarning.textContent = json[0].total_revenue;
                           })
                           .catch(error => {
                             console.log("Error:", error);

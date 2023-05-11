@@ -458,12 +458,12 @@
                   class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                   >View Orders</a>
               </li>
-              <li>
+              <!-- <li>
                 <a
-                  href="pendingBill.html"
+                  href="deleteOrder.html"
                   class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                  >Pending Bills</a>
-              </li>
+                  >Delete Orders</a>
+              </li> -->
               <li>
                 <a
                   href="updateOrder.html"
@@ -518,98 +518,25 @@
     </span>
 
 <span class="main-form">
-      <form method="post" action="http://localhost:3000/addOrder">
+      <form method="get" >
 
         <div class="mb-3">
           <label for="order_id" class="form-label">Order ID</label>
           <div class="input-group mb-3">
-            <span class="input-group-text" id="order_id">ID 
-              
-            </span>
+            <span class="input-group-text" id="order_id">ID</span>
             <input
               type="text"
               class="form-control"
               aria-label="Username"
               aria-describedby="basic-addon1"
               name="order_id"
-              
+              id="order_final"
             />
-            
           </div>
         </div>
-
-        <div class="mb-3">
-            <label for="employee_id" class="form-label">Employee ID</label>
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="empDispId">ID</span>
-              <input
-                type="text"
-                class="form-control"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-                name="employee_id"
-                id="employee_id"
-              />
-            </div>
-          </div>
-
-        <div class="mb-3">
-            <label for="customer_id" class="form-label">Customer ID</label>
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="customer_id">ID</span>
-              <input
-                type="text"
-                class="form-control"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-                name="customer_id"
-                id="order_insert"
-              
-              />
-            </div>
-          </div>
-
-        <div class="mb-3">
-            <label for="product_id" class="form-label">Product ID</label>
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="product_id">ID</span>
-              <input
-                type="text"
-                class="form-control"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-                name="product_id"
-                id="productId"
-              />
-            </div>
-          </div>
-
-        
-          <div class="mb-3">
-            <label for="quantity" class="form-label">Quantity</label>
-            <input
-              type="text"
-              class="form-control"
-              id="quantity"
-              aria-describedby="emailHelp"
-              name="quantity"
-              id="productQuantity"
-              
-            />
-          
-          </div>
-          <div class="mb-3">
-            <label for="expiry" class="form-label">Date</label>
-            <input
-              type="date"
-              class="form-control"
-              id="expiry"
-              aria-describedby="emailHelp"
-              name="order_Date"
-            />
-          </div>
-
-        <button
+      </form>
+      <br><br>
+      <button
           type="submit"
           class="btn btn-primary"
           name="add_product_submit"
@@ -617,14 +544,49 @@
         >
           Submit
         </button>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID#</th>
+            <th scope="col">Product ID#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Total Amt</th>
+            <th scope="col">Total Discount</th>
+            <th scope="col">Loyalty Type</th>
+          </tr>
+        </thead>
+        <tbody id="tableDisplay">
+        </tbody >
+      </table>
 
-        <br><br>
-
-
-
-
-
-      </form>
+      <div class="mb-3">
+            <label for="p_supplier_price" class="form-label"
+              >Total Price </label>
+              <span class="input-group-text" id="customer_id">Discount Applied as per Membership </span>
+            <div class="input-group mb-3">
+              <span class="input-group-text">₹</span>
+              <input
+                placeholder=""
+                type="text"
+                class="form-control"
+                aria-label="Price"
+                name="p_supplier_price"
+                id="p_supplier_price"
+              />
+              <span class="input-group-text"></span>
+            </div>
+          </div>
+          <button
+          type="submit"
+          class="btn btn-primary"
+          name="add_product_submit"
+          id="redirectButton"
+          
+          
+        >
+          Generate Bill
+        </button>
+          
     </span>
 
     <script
@@ -632,6 +594,6 @@
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"
     ></script>
-    <script src="addOrder.js"></script>
+    <script src="orderCart.js"></script>
   </body>
 </html>
