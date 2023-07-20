@@ -30,7 +30,7 @@ The seamless integration of database design and UI creation laid the foundation 
 
 The development of this departmental store management system was made possible with the contributions of the following individuals:
 
-1. Aryan Mangla
+1. [Aryan Mangla](https://github.com/Aryan-333)
 2. Tavish Gupta
 3. Priyanshu Vij
 
