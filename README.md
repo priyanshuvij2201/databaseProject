@@ -4,6 +4,8 @@ This project report outlines the development of a departmental store management 
 
 ## Overview
 Departmental stores are facing various challenges in managing their inventory, tracking sales, and maintaining customer relations. Many stores rely on manual systems that are time-consuming and error-prone, resulting in poor customer service, stockouts, and loss of sales. To address these issues, there is a need for a digital management system that can automate store processes, provide real-time inventory updates, and track sales data. This project aims to create a departmental store management system that uses database design and UI creation to improve the efficiency and effectiveness of store operations, resulting in improved customer satisfaction, increased sales, and reduced costs.
+
+
 <img width="786" alt="Screenshot 2023-07-20 at 3 27 12 PM" src="https://github.com/priyanshuvij2201/databaseProject/assets/79599835/92a1c34c-cb98-40f7-825f-d1c4cf76f0a2">
 <img width="789" alt="Screenshot 2023-07-20 at 3 27 39 PM" src="https://github.com/priyanshuvij2201/databaseProject/assets/79599835/c10230ec-24d2-4f4a-ac95-3702a78e6449">
 
@@ -24,5 +26,5 @@ To develop the departmental store management system, a comprehensive methodology
 
 The seamless integration of database design and UI creation laid the foundation for an effective system that streamlines inventory management, sales tracking, and customer relations in the departmental store. It enables efficient data management and meets the needs of the store staff.
 
-> Note: Please see the actual report for detailed diagrams and tables.
+> Note: Please see the actual report and snapshots pdf for detailed diagrams and tables.
 
