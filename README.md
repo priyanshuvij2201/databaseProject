@@ -26,5 +26,14 @@ To develop the departmental store management system, a comprehensive methodology
 
 The seamless integration of database design and UI creation laid the foundation for an effective system that streamlines inventory management, sales tracking, and customer relations in the departmental store. It enables efficient data management and meets the needs of the store staff.
 
+## Contributors
+
+The development of this departmental store management system was made possible with the contributions of the following individuals:
+
+1. Aryan Mangla
+2. Tavish Gupta
+3. Priyanshu Vij
+
+
 > Note: Please see the actual report and snapshots pdf for detailed diagrams and tables.
 
